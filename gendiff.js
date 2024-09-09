@@ -4,6 +4,7 @@
 import path from 'path';
 import { readFile, parseJson } from './fileParser.js';
 import { program } from 'commander';
+import { genDiff } from './fileParser.js';
 
 program
     .version('1.0.0')
@@ -25,6 +26,9 @@ program
 
         console.log(obj1);
         console.log(obj2);
+
+        const diff = genDiff(obj1, obj2);
+        console.log(diff);
     });
 
 program.parse(process.argv);
