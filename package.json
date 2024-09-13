@@ -4,7 +4,8 @@
   "description": "[![Actions Status](https://github.com/Viktor191/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Viktor191/frontend-project-46/actions)",
   "main": "gendiff.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "lint": "eslint ."
   },
   "author": "Viktor",
   "license": "ISC",
