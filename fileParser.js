@@ -11,27 +11,6 @@ export function parseYaml(content) {// парсим содержимое фай�
     return yaml.load(content);
 }
 
-function strFormat(obj, depth = 1) {
-    const indentSize = 4; // Основной отступ
-    const currentIndent = ' '.repeat(depth * indentSize); // Отступ для текущего уровня
-    const bracketIndent = ' '.repeat((depth - 1) * indentSize); // Отступ для закрывающей скобки
-    let result = '{\n';
-
-    for (const [key, value] of Object.entries(obj)) {
-        if (typeof value === 'object' && value !== null) {
-            // Если значение - объект, рекурсивный вызов с увеличенным отступом
-            result += `${currentIndent}${key}: ${strFormat(value, depth + 1)}\n`;
-        } else {
-            // Если значение не объект, добавляем его с отступом
-            result += `${currentIndent}${key}: ${value}\n`;
-        }
-    }
-
-    result += `${bracketIndent}}`; // Закрывающая скобка
-
-    return result;
-}
-
 export function genDiff(obj1, obj2) {
     const result = {};
 
@@ -60,9 +39,9 @@ export function genDiff(obj1, obj2) {
     });
 
     // Форматирование
+    console.log(result);
 
-
-    return strFormat(result);
+    return result;
 }
 // node ./gendiff.js ./file1.json ./file2.json
 // node ./gendiff.js ./file1.yml ./file2.yml

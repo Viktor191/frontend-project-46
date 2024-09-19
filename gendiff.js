@@ -6,13 +6,14 @@ import {readFile, parseJson} from './fileParser.js';
 import {program} from 'commander';
 import {genDiff} from './fileParser.js';
 import {parseYaml} from "./fileParser.js";
+import getFormatter from './formatters/index.js';
 
 program
     .version('1.0.0')
     .description('Compares two configuration files and shows a difference.')
-    .option('-f, --format [type]', 'output format')
+    .option('-f, --format [type]', 'output format', 'stylish')
     .arguments('<filepath1> <filepath2>')
-    .action((filepath1, filepath2) => {
+    .action((filepath1, filepath2, cmdObj) => {
         const absolutePath1 = path.resolve(process.cwd(), filepath1);// получаем абсолютный путь к файлу
         const absolutePath2 = path.resolve(process.cwd(), filepath2);
 
@@ -39,7 +40,9 @@ program
         //console.log(obj2);
 
         const diff = genDiff(obj1, obj2);// сравниваем два объекта и выводим различия
-        console.log(diff);
+
+        const formatter = getFormatter(cmdObj.format); // Получаем форматтер
+        console.log(formatter(diff)); // Используем выбранный формат вывода
     });
 
 program.parse(process.argv);
