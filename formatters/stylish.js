@@ -2,20 +2,19 @@ function stylishFormat(obj, depth = 1) {
     const indentSize = 4; // Основной отступ
     const currentIndent = ' '.repeat(depth * indentSize); // Отступ для текущего уровня
     const bracketIndent = ' '.repeat((depth - 1) * indentSize); // Отступ для закрывающей скобки
-    let result = '{\n';
 
-    for (const [key, value] of Object.entries(obj)) {
+    const formatEntry = ([key, value]) => {
         if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
             // Если значение - объект, рекурсивный вызов с увеличенным отступом
-            result += `${currentIndent}${key}: ${stylishFormat(value, depth + 1)}\n`;
-        } else {
-            // Если значение не объект, добавляем его с отступом
-            result += `${currentIndent}${key}: ${value}\n`;
+            return `${currentIndent}${key}: ${stylishFormat(value, depth + 1)}`;
         }
-    }
+        // Если значение не объект, добавляем его с отступом
+        return `${currentIndent}${key}: ${value}`;
+    };
 
-    result += `${bracketIndent}}`; // Закрывающая скобка
+    const formattedEntries = Object.entries(obj).map(formatEntry).join('\n'); // Обрабатываем каждую запись
 
-    return result;
+    return `{\n${formattedEntries}\n${bracketIndent}}`; // Закрывающая скобка
 }
+
 export default stylishFormat;
