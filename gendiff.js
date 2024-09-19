@@ -39,9 +39,9 @@ program
         //console.log(obj1);
         //console.log(obj2);
 
-        const diff = genDiff(obj1, obj2);// сравниваем два объекта и выводим различия
+        const diff = genDiff(obj1, obj2);// сравниваем два объекта и выводим различия в виде объекта
 
-        const formatter = getFormatter(cmdObj.format); // Получаем форматтер
+        const formatter = getFormatter(cmdObj.format); // Получаем форматтер по имени формата из опций командной строки
         console.log(formatter(diff)); // Используем выбранный формат вывода
     });
 
