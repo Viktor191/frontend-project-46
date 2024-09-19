@@ -5,7 +5,7 @@ function strFormat(obj, depth = 1) {
     let result = '{\n';
 
     for (const [key, value] of Object.entries(obj)) {
-        if (typeof value === 'object' && value !== null) {
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
             // Если значение - объект, рекурсивный вызов с увеличенным отступом
             result += `${currentIndent}${key}: ${strFormat(value, depth + 1)}\n`;
         } else {
