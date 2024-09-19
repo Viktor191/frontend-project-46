@@ -1,33 +1,30 @@
 function plainFormat(obj) {
-    const iter = (data, path = '') => Object.entries(data) // Преобразуем объект в массив ключей и значений
-        .map(([key, value]) => {
-            // Определяем тип изменения по префиксу в ключе
-            let keyType = ' ';// тип изменения по умолчанию - неизменен
-            let actualKey = key;// ключ без префикса
+    const iter = (data, path = '') => {
+        return Object.entries(data).flatMap(([key, value]) => {
+            const keyType = key[0] === '-' || key[0] === '+' ? key[0] : ' ';
+            const actualKey = keyType !== ' ' ? key.slice(2) : key;
 
-            // Если ключ начинается с '-' или '+', определяем тип изменения и обрезаем префикс
-            if (key[0] === '-' || key[0] === '+') {
-                keyType = key[0];
-                actualKey = key.slice(2); // удаляем префикс '- ' или '+ '
-            }
+            const newPath = path === '' ? actualKey : `${path}.${actualKey}`;
 
-            const newPath = path === '' ? actualKey : `${path}.${actualKey}`; // формируем путь к текущему ключу в виде строки
-
+            // Если значение - объект, рекурсивно обрабатываем вложенные изменения
             if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-                // Если значение - объект, рекурсивно обрабатываем вложенные изменения
-                return iter(value, newPath); // рекурсивный вызов с новым путем
+                return iter(value, newPath); // рекурсивный вызов
             }
 
-            if (keyType === '-') {
+            return generateMessage(keyType, newPath, value);
+        });
+    };
+
+    const generateMessage = (keyType, newPath, value) => {
+        switch (keyType) {
+            case '-':
                 return `Property '${newPath}' was removed`;
-            }
-            if (keyType === '+') {
+            case '+':
                 return `Property '${newPath}' was added with value: ${value}`;
-            }
-            // Если тип не 'added' и не 'deleted', пропускаем
-            return [];
-        })
-        .flat();
+            default:
+                return [];
+        }
+    };
 
     return iter(obj).join('\n');
 }
