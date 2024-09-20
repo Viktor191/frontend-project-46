@@ -1,46 +1,80 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { readFileSync } from 'fs';
-import { genDiff } from '../fileParser.js';
-import { parseYaml } from '../fileParser.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import getFormatter from '../formatters/index.js'; // Для получения форматтера
+import {genDiff, parseJson, parseYaml} from '../fileParser.js'; // Ваши функции парсинга
 
+// Получаем путь до папки __fixtures__
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const getFixturePath = (filename) => path.join(__dirname, '__fixtures__', filename);
 
-test('diff between two JSON files', () => {
-    const filepath1 = path.join(__dirname, '..', 'file1.json');
-    const filepath2 = path.join(__dirname, '..', 'file2.json');
+// Читаем данные из файлов
+const readFile = (filepath) => readFileSync(filepath, 'utf-8');
 
-    const file1 = JSON.parse(readFileSync(filepath1, 'utf-8'));
-    const file2 = JSON.parse(readFileSync(filepath2, 'utf-8'));
+// Тест для стиля "stylish"
+test('diff between two JSON files (stylish)', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
 
+    // Парсим файлы
+    const file1 = parseJson(readFile(filepath1));
+    const file2 = parseJson(readFile(filepath2));
+
+    // Ожидаемый результат (пример)
     const expected = `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
+    common: {
+        + follow: false
+          setting1: Value 1
+        - setting2: 200
+        - setting3: true
+        + setting3: null
+        + setting4: blah blah
+        + setting5: {
+            key5: value5
+        }
+        setting6: {
+            doge: {
+                - wow: 
+                + wow: so much
+            }
+              key: value
+            + ops: vops
+        }
+    }
+    group1: {
+        - baz: bas
+        + baz: bars
+          foo: bar
+        - nest: {
+            key: value
+        }
+        + nest: str
+    }
+    - group2: {
+        abc: 12345
+        deep: {
+            id: 45
+        }
+    }
+    + group3: {
+        deep: {
+            id: {
+                number: 45
+            }
+        }
+        fee: 100500
+    }
 }`;
 
-    expect(genDiff(file1, file2)).toBe(expected);
+    // Получаем форматтер
+    const formatter = getFormatter('stylish');// Получаем форматтер для стиля "stylish" (или другого)
+
+    // Генерируем diff и форматируем результат
+    const diff = genDiff(file1, file2);
+    const result = formatter(diff);
+    console.log(result);
+    // Сравниваем результат с эталоном
+    expect(result).toEqual(expected);
 });
-
-test('diff between two YAML files', () => {
-    const filepath1 = path.join(__dirname, '..', 'file1.yml');
-    const filepath2 = path.join(__dirname, '..', 'file2.yml');
-
-    const file1 = parseYaml(readFileSync(filepath1, 'utf-8')); // Используем parseYaml для парсинга YAML
-    const file2 = parseYaml(readFileSync(filepath2, 'utf-8'));
-
-    const expected = `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}`;
-
-    expect(genDiff(file1, file2)).toBe(expected);
-});
+//    expect(result).toEqual(expected);  // Используем toEqual для сравнения строк

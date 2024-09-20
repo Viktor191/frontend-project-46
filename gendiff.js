@@ -41,8 +41,11 @@ program
 
         const diff = genDiff(obj1, obj2);// сравниваем два объекта и выводим различия в виде объекта
 
-        const formatter = getFormatter(cmdObj.format); // Получаем форматтер по имени формата из опций командной строки
-        console.log(formatter(diff)); // Используем выбранный формат вывода
+        const formatter = getFormatter(cmdObj.format);
+        const result = formatter(diff) // форматируем вывод в соответствии с выбранным форматом
+        console.log(result); // Используем выбранный формат вывода
+
+        return result;
     });
 
 program.parse(process.argv);
