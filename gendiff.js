@@ -48,4 +48,4 @@ program
         return result;
     });
 
-program.parse(process.argv);
+program.parse(process.argv);// color

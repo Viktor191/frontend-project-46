@@ -21,59 +21,62 @@ test('diff between two JSON files (stylish)', () => {
     const file1 = parseJson(readFile(filepath1));
     const file2 = parseJson(readFile(filepath2));
 
-    // Ожидаемый результат (пример)
-    const expected = `{
-    common: {
-        + follow: false
-          setting1: Value 1
-        - setting2: 200
-        - setting3: true
-        + setting3: null
-        + setting4: blah blah
-        + setting5: {
-            key5: value5
-        }
-        setting6: {
-            doge: {
-                - wow: 
-                + wow: so much
-            }
-              key: value
-            + ops: vops
-        }
-    }
-    group1: {
-        - baz: bas
-        + baz: bars
-          foo: bar
-        - nest: {
-            key: value
-        }
-        + nest: str
-    }
-    - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-    + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
-    }
-}`;
+    // Ожидаемый результат из файла
+    const expected = readFile(getFixturePath('expected_stylish.txt')).trim();
 
     // Получаем форматтер
-    const formatter = getFormatter('stylish');// Получаем форматтер для стиля "stylish" (или другого)
+    const formatter = getFormatter('stylish');
 
     // Генерируем diff и форматируем результат
     const diff = genDiff(file1, file2);
     const result = formatter(diff);
-    console.log(result);
+
+    // Сравниваем результат с эталоном
+    expect(result).toEqual(expected);
+});
+
+// Тест для стиля "plain"
+test('diff between two JSON files (plain)', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+
+    // Парсим файлы
+    const file1 = parseJson(readFile(filepath1));
+    const file2 = parseJson(readFile(filepath2));
+
+    // Ожидаемый результат из файла
+    const expected = readFile(getFixturePath('expected_plain.txt')).trim();
+
+    // Получаем форматтер
+    const formatter = getFormatter('plain');
+
+    // Генерируем diff и форматируем результат
+    const diff = genDiff(file1, file2);
+    const result = formatter(diff);
+
+    // Сравниваем результат с эталоном
+    expect(result).toEqual(expected);
+});
+
+// Тест для стиля "json"
+test('diff between two JSON files (json)', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+
+    // Парсим файлы
+    const file1 = parseJson(readFile(filepath1));
+    const file2 = parseJson(readFile(filepath2));
+
+    // Ожидаемый результат из файла
+    const expected = readFile(getFixturePath('expected_json.txt')).trim();
+
+    // Получаем форматтер
+    const formatter = getFormatter('json');
+
+    // Генерируем diff и форматируем результат
+    const diff = genDiff(file1, file2);
+    const result = formatter(diff);
+
     // Сравниваем результат с эталоном
     expect(result).toEqual(expected);
 });

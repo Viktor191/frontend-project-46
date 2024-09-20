@@ -46,5 +46,6 @@ export function genDiff(obj1, obj2) {
 // node ./gendiff.js ./file1.json ./file2.json
 // node ./gendiff.js ./file1.yml ./file2.yml
 // node ./gendiff.js ./file1.json ./file2.json
-// node ./gendiff.js --format plain ./file1.json ./file2.json
+// node ./gendiff.js --format json ./file11.json ./file22.json
+// node ./gendiff.js --format plain ./file11.json ./file22.json
 // node ./gendiff.js --format stylish ./file1.json ./file2.json
