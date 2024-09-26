@@ -32,13 +32,6 @@ program
             obj2 = parseJson(file2Content);
         }
 
-        //console.log('fileFormat: ' + fileFormat);
-        //console.log(file1Content);
-        //console.log(file2Content);
-
-        //console.log(obj1);
-        //console.log(obj2);
-
         const diff = genDiff(obj1, obj2);// сравниваем два объекта и выводим различия в виде объекта
 
         const formatter = getFormatter(cmdObj.format);
@@ -48,4 +41,4 @@ program
         return result;
     });
 
-program.parse(process.argv);// color
+program.parse(process.argv);
