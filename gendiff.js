@@ -42,3 +42,5 @@ program
     });
 
 program.parse(process.argv);
+
+export { readFile, parseJson, parseYaml, genDiff, getFormatter };

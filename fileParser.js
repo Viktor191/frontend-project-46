@@ -38,9 +38,6 @@ export function genDiff(obj1, obj2) {
         }
     });
 
-    // Форматирование
-    // console.log(result);
-
     return result;
 }
 // node ./gendiff.js ./file1.json ./file2.json
