@@ -2,10 +2,10 @@
 
 // file: gendiff.js //
 import path from 'path';
-import {readFile, parseJson} from './fileParser.js';
+import {readFile, parseJson} from './fileparser.js';
 import {program} from 'commander';
-import {genDiff} from './fileParser.js';
-import {parseYaml} from "./fileParser.js";
+import {genDiff} from './fileparser.js';
+import {parseYaml} from "./fileparser.js";
 import getFormatter from './formatters/index.js';
 
 program
@@ -42,5 +42,3 @@ program
     });
 
 program.parse(process.argv);
-
-export { readFile, parseJson, parseYaml, genDiff, getFormatter };

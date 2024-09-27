@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import getFormatter from '../formatters/index.js'; // Для получения форматтера
-import {genDiff, parseJson, parseYaml} from '../fileParser.js'; // Ваши функции парсинга
+import {genDiff, parseJson, parseYaml} from '../fileparser.js'; // Ваши функции парсинга
 
 // Получаем путь до папки __fixtures__
 const __filename = fileURLToPath(import.meta.url);
