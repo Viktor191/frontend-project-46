@@ -40,6 +40,8 @@ export function genDiff(obj1, obj2) {
 
     return result;
 }
+export default genDiff;
+
 // node ./gendiff.js ./file1.json ./file2.json
 // node ./gendiff.js ./file1.yml ./file2.yml
 // node ./gendiff.js ./file1.json ./file2.json
