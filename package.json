@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/Viktor191/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Viktor191/frontend-project-46/actions)",
-  "main": "fileparser.js",
+  "main": "gendiff.js",
   "scripts": {
     "test": "npx jest --coverage",
     "lint": "eslint ."
